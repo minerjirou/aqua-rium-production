@@ -11,7 +11,7 @@ const { name, avatar, slug, tags = [] } = Astro.props as MemberCardProps;
 ---
 <a href={`/members/${slug}`} class="group rounded-xl border bg-white/50 dark:bg-gray-900/40 border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-lg transition">
   <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
-    <img src={r2(avatar)} alt={`${name} avatar`} loading="lazy" class="h-full w-full object-cover group-hover:scale-[1.03] transition" />
+    <img src={r2(avatar)} alt={`${name} avatar`} loading="lazy" class="h-full w-full object-cover group-hover:scale-[1.03] transition" onerror="this.onerror=null;this.src='/images/placeholder-avatar.svg'" />
   </div>
   <div class="p-4">
     <div class="font-semibold text-lg">{name}</div>

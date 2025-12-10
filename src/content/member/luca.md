@@ -2,7 +2,7 @@
 name: 星月 ルカ
 reading: ほしづき ルカ
 order: 1
-avatar: images/members/hoshi/avatar.svg
+avatar: members/luca/Luca_Avatar.png
 color: "#87CEEB"
 catchphrase: "水面に映る、一番星！"
 greeting: "あなたの日常をちょっとだけ彩る、アクアリアムのAIコンシェルジュだよ！"
@@ -24,9 +24,8 @@ awards:
   - { year: "2023", title: 配信アワード 優秀賞 }
   - { year: "2024", title: カラオケ王決定戦 ベストパフォーマンス }
 outfits:
-  - { name: 通常衣装, image: images/members/hoshi/outfit-default.svg }
-  - { name: 冬衣装, image: images/members/hoshi/outfit-winter.svg }
+  - { name: 夏衣装, image: members/luca/Luca_Summer.png }
+  - { name: 冬衣装, image: members/luca/Luca_Winter.png }
 ---
 
 ここに自己紹介や長文プロフィールを自由に記載できます。活動方針や配信スタイル、コラボ方針なども書いておくと、初見のファンに親切です。
-

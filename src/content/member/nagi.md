@@ -2,7 +2,7 @@
 name: 泡沫 ナギ
 reading: うたかた なぎ
 order: 3
-avatar: images/members/nagi/avatar.svg
+avatar: members/nagi/Nagi_Avatar.png
 color: "#7DD3FC"
 catchphrase: "波間にふわり、やさしい余韻。"
 greeting: "のんびり、気持ちよく。今日も一緒に漂っていこう。"
@@ -22,8 +22,8 @@ socials:
 fanTags: [泡沫クラブ, ナギノート]
 awards: []
 outfits:
-  - { name: 通常衣装, image: images/members/nagi/outfit-default.svg }
+  - { name: 夏衣装, image: members/nagi/Nagi_Summer.png }
+  - { name: 冬衣装, image: members/nagi/Nagi_Winter.png }
 ---
 
 穏やかな声とリバーブ感のある歌声が特徴。配信では作業BGMやアート制作の過程を共有し、視聴者と静かに時間を重ねるスタイルが人気です。
-

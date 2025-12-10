@@ -2,7 +2,7 @@
 name: 氷上 カナタ
 reading: ひかみ かなた
 order: 2
-avatar: images/members/kumo/avatar.svg
+avatar: members/kanata/Kanata_Avatar.png
 color: "#B0E0E6"
 catchphrase: "静けさに寄り添う、氷の微笑。"
 greeting: "焦らず、ゆっくり。今日もあなたの心を整えます。"
@@ -22,8 +22,8 @@ socials:
 fanTags: [カナとも, 氷紋]
 awards: []
 outfits:
-  - { name: 通常衣装, image: images/members/kumo/outfit-default.svg }
+  - { name: 夏衣装, image: members/kanata/Kanata_Summer.png }
+  - { name: 冬衣装, image: members/kanata/Kanata_Winter.png }
 ---
 
 落ち着いたトーンでの雑談や朗読、睡眠導入の環境音配信などを得意とします。ときどき不意に見せるいたずら心も魅力。
-
