@@ -46,22 +46,31 @@ const agency = import.meta.env.AGENCY_NAME ?? 'Vtuber Agency';
   </head>
   <body class="min-h-screen flex flex-col">
     <header class="border-b border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-950/70 backdrop-blur">
-      <div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3 group">
-          <img src="/logo.svg" alt="Aqua-Rium Production logo" class="h-8 w-8" />
+      <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 group">
+          <img src="/logo.svg" alt="Aqua-Rium Production logo" class="h-7 w-7" />
           <div class="leading-tight">
-            <div class="text-xl font-bold text-brand group-hover:text-brand-dark transition">{import.meta.env.AGENCY_NAME ?? 'Agency'}</div>
-            <div class="text-xs text-gray-500">Aqua-Rium Production</div>
+            <div class="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-brand-dark transition">{import.meta.env.AGENCY_NAME ?? 'アクアリアムプロダクション'}</div>
+            <div class="hidden md:block text-[10px] text-gray-500">Aqua-Rium Production</div>
           </div>
         </a>
-        <nav class="flex gap-6 items-center text-sm">
+        <nav class="hidden md:flex gap-6 items-center text-sm">
           <a href="/members" class="hover:text-brand">メンバー</a>
           <a href="/news" class="hover:text-brand">ニュース</a>
           <a href="https://twitter.com" target="_blank" class="hover:text-brand">X</a>
           <div class="ml-2"><ThemeToggle /></div>
         </nav>
+        <button id="btn-mobile-nav" class="md:hidden inline-flex items-center gap-2 rounded border px-3 py-1 text-sm hover:border-brand" aria-controls="mobile-nav" aria-expanded="false" aria-label="メニュー">☰</button>
       </div>
     </header>
+    <div id="mobile-nav" class="md:hidden hidden border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4 py-3 flex gap-6 items-center text-sm">
+        <a href="/members" class="hover:text-brand">メンバー</a>
+        <a href="/news" class="hover:text-brand">ニュース</a>
+        <a href="https://twitter.com" target="_blank" class="hover:text-brand">X</a>
+        <div class="ml-auto"><ThemeToggle /></div>
+      </div>
+    </div>
     <main class="flex-1">
       <slot />
     </main>
@@ -74,3 +83,15 @@ const agency = import.meta.env.AGENCY_NAME ?? 'Vtuber Agency';
 <style is:global>
   @import '/src/styles/global.css';
 </style>
+<script>
+  try {
+    const btn = document.getElementById('btn-mobile-nav');
+    const panel = document.getElementById('mobile-nav');
+    btn?.addEventListener('click', () => {
+      const open = panel?.classList.contains('hidden');
+      panel?.classList.toggle('hidden');
+      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  } catch {}
+</script>
+

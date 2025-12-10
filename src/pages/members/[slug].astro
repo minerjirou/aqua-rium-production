@@ -18,7 +18,7 @@ const { Content } = await m.render();
   <article class="mx-auto max-w-6xl px-4 py-8">
     <div class="grid md:grid-cols-[280px_1fr] gap-8 items-start">
       <div class="sticky top-6">
-        <img src={r2(data.avatar)} alt={`${data.name} avatar`} class="w-full aspect-[3/4] object-cover rounded-xl border border-gray-200 dark:border-gray-800" onerror="this.onerror=null;this.src='/images/placeholder-avatar.svg'" />
+        <img src={r2(data.avatar)} alt={`${data.name} avatar`} sizes="(min-width: 1024px) 280px, 45vw" class="w-full aspect-[3/4] object-cover rounded-xl border border-gray-200 dark:border-gray-800" onerror="this.onerror=null;this.src='/images/placeholder-avatar.svg'" />
         <h1 class="mt-4 text-2xl font-bold">{data.name}</h1>
         {data.fanTags.length > 0 && (
           <div class="mt-2 flex flex-wrap gap-2">
