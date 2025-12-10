@@ -1,0 +1,15 @@
+# Centralized tags list (optional)
+# - Add tags here to make them appear even if no content uses them yet
+# - Content-defined tags are also discovered automatically and merged
+
+tags:
+  - リリース
+  - メンバー
+  - イベント
+  - コラボ
+
+# Optional: tags for members (fanTags)
+memberTags:
+  - 歌
+  - 雑談
+  - ゲーム

@@ -3,9 +3,12 @@ import Base from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import NewsList from '@/components/NewsList.astro';
 import { slugify } from '@/utils/slug';
+import { getConfiguredTags, mergeTags } from '@/utils/tags';
 
 const news = (await getCollection('news')).sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
-const tags = Array.from(new Map(news.flatMap(n => (n.data.tags ?? []).map(t => [slugify(t), t])))).map(([slug, name]) => ({ slug, name }));
+const configuredTags = await getConfiguredTags();
+const discoveredTags = Array.from(new Set(news.flatMap(n => (n.data.tags ?? []))));
+const tags = mergeTags(configuredTags, discoveredTags);
 const categories = Array.from(new Map(news.filter(n => n.data.category).map(n => [slugify(n.data.category as string), n.data.category as string]))).map(([slug, name]) => ({ slug, name }));
 ---
 <Base title={`ニュース | ${import.meta.env.AGENCY_NAME ?? 'Vtuber Agency'}`} description="イベント、リリース、コラボなどの最新情報をお届けします。">
@@ -30,4 +33,3 @@ const categories = Array.from(new Map(news.filter(n => n.data.category).map(n =>
     </div>
   </section>
 </Base>
-

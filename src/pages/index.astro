@@ -62,7 +62,7 @@ const concept = '「透明な器（アクアリウム）の中で、それぞれ
     <h2 class="text-2xl font-bold">メンバー</h2>
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {members.map((m) => (
-        <MemberCard name={m.data.name} avatar={m.data.avatar} slug={m.slug} tags={m.data.fanTags} />
+        <MemberCard name={m.data.name} avatar={m.data.avatar} slug={m.slug} generation={m.data.category as string} />
       ))}
     </div>
   </section>

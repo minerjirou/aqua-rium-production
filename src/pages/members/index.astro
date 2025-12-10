@@ -3,9 +3,12 @@ import Base from '@/layouts/BaseLayout.astro';
 import MemberCard from '@/components/MemberCard.astro';
 import { getCollection } from 'astro:content';
 import { slugify } from '@/utils/slug';
+import { getConfiguredMemberTags, mergeTags } from '@/utils/tags';
 
 const members = (await getCollection('member')).sort((a, b) => a.data.order - b.data.order);
-const tags = Array.from(new Map(members.flatMap(m => (m.data.fanTags ?? []).map(t => [slugify(t), t])))).map(([slug, name]) => ({ slug, name }));
+const configuredTags = await getConfiguredMemberTags();
+const discoveredTags = Array.from(new Set(members.flatMap(m => (m.data.fanTags ?? []))));
+const tags = mergeTags(configuredTags, discoveredTags);
 const categories = Array.from(new Map(members.filter(m => m.data.category).map(m => [slugify(m.data.category as string), m.data.category as string]))).map(([slug, name]) => ({ slug, name }));
 ---
 <Base title={`メンバー一覧 | ${import.meta.env.AGENCY_NAME ?? 'Vtuber Agency'}`} description="各メンバーのSNS、ファンタグ、受賞歴、衣装などの情報を閲覧できます。">
@@ -26,7 +29,7 @@ const categories = Array.from(new Map(members.filter(m => m.data.category).map(m
 
     <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {members.slice(0, 9).map((m) => (
-        <MemberCard name={m.data.name} avatar={m.data.avatar} slug={m.slug} tags={m.data.fanTags} />
+        <MemberCard name={m.data.name} avatar={m.data.avatar} slug={m.slug} generation={m.data.category as string} />
       ))}
     </div>
     <div class="mt-6 text-right">
@@ -34,4 +37,3 @@ const categories = Array.from(new Map(members.filter(m => m.data.category).map(m
     </div>
   </section>
 </Base>
-

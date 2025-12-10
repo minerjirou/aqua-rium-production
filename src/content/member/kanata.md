@@ -3,6 +3,7 @@ name: 氷上 カナタ
 reading: ひかみ かなた
 order: 2
 avatar: members/kanata/Kanata_Avatar.png
+category: 2期生
 color: "#B0E0E6"
 catchphrase: "静けさに寄り添う、氷の微笑。"
 greeting: "焦らず、ゆっくり。今日もあなたの心を整えます。"

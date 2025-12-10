@@ -4,12 +4,18 @@ import MemberCard from '@/components/MemberCard.astro';
 import Pagination from '@/components/Pagination.astro';
 import { getCollection } from 'astro:content';
 import { slugify } from '@/utils/slug';
+import { getConfiguredMemberTags } from '@/utils/tags';
 
 const PAGE_SIZE = 9;
 
 export async function getStaticPaths() {
   const members = await getCollection('member');
   const tags = new Map<string, string>(); // slug -> original
+  for (const t of await getConfiguredMemberTags()) {
+    const s = slugify(String(t || '').trim());
+    if (!s) continue;
+    if (!tags.has(s)) tags.set(s, t);
+  }
   for (const m of members) {
     for (const t of m.data.fanTags ?? []) {
       const s = slugify(String(t || '').trim());

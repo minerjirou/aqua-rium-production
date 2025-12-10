@@ -4,12 +4,18 @@ import NewsList from '@/components/NewsList.astro';
 import Pagination from '@/components/Pagination.astro';
 import { getCollection } from 'astro:content';
 import { slugify } from '@/utils/slug';
+import { getConfiguredTags } from '@/utils/tags';
 
 const PAGE_SIZE = 10;
 
 export async function getStaticPaths() {
   const news = await getCollection('news');
   const tags = new Map<string, string>();
+  for (const t of await getConfiguredTags()) {
+    const s = slugify(String(t || '').trim());
+    if (!s) continue;
+    if (!tags.has(s)) tags.set(s, t);
+  }
   for (const n of news) {
     for (const t of n.data.tags ?? []) {
       const s = slugify(String(t || '').trim());

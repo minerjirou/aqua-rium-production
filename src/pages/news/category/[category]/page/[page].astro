@@ -4,6 +4,7 @@ import NewsList from '@/components/NewsList.astro';
 import Pagination from '@/components/Pagination.astro';
 import { getCollection } from 'astro:content';
 import { slugify } from '@/utils/slug';
+import { getConfiguredTags } from '@/utils/tags';
 
 const PAGE_SIZE = 10;
 

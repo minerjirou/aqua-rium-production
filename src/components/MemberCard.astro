@@ -6,8 +6,9 @@ export interface MemberCardProps {
   avatar: string;
   slug: string;
   tags?: string[];
+  generation?: string;
 }
-const { name, avatar, slug, tags = [] } = Astro.props as MemberCardProps;
+const { name, avatar, slug, tags = [], generation } = Astro.props as MemberCardProps;
 ---
 <a href={`/members/${slug}`} class="group rounded-xl border bg-gray-50 dark:bg-gray-900/40 border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-md transition">
   <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
@@ -15,11 +16,9 @@ const { name, avatar, slug, tags = [] } = Astro.props as MemberCardProps;
   </div>
   <div class="p-4">
     <div class="font-semibold text-lg">{name}</div>
-    {tags.length > 0 && (
+    {(generation ?? '').trim() && (
       <div class="mt-2 flex flex-wrap gap-2">
-        {tags.slice(0, 3).map((t) => (
-          <span class="text-xs rounded-full bg-gray-100 dark:bg-gray-800 px-2 py-0.5 text-gray-600 dark:text-gray-300">#{t}</span>
-        ))}
+        <span class="text-xs rounded-full bg-gray-100 dark:bg-gray-800 px-2 py-0.5 text-gray-700 dark:text-gray-300">{generation}</span>
       </div>
     )}
   </div>

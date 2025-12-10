@@ -3,6 +3,7 @@ name: 星月 ルカ
 reading: ほしづき ルカ
 order: 1
 avatar: members/luca/Luca_Avatar.png
+category: 1期生
 color: "#87CEEB"
 catchphrase: "水面に映る、一番星！"
 greeting: "あなたの日常をちょっとだけ彩る、アクアリアムのAIコンシェルジュだよ！"

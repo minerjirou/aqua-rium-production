@@ -3,6 +3,7 @@ name: 泡沫 ナギ
 reading: うたかた なぎ
 order: 3
 avatar: members/nagi/Nagi_Avatar.png
+category: 3期生
 color: "#7DD3FC"
 catchphrase: "波間にふわり、やさしい余韻。"
 greeting: "のんびり、気持ちよく。今日も一緒に漂っていこう。"
