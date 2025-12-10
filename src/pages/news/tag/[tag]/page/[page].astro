@@ -12,7 +12,8 @@ export async function getStaticPaths() {
   const tags = new Map<string, string>();
   for (const n of news) {
     for (const t of n.data.tags ?? []) {
-      const s = slugify(t);
+      const s = slugify(String(t || '').trim());
+      if (!s) continue; // skip empty/invalid slugs
       if (!tags.has(s)) tags.set(s, t);
     }
   }
