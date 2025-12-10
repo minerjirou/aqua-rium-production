@@ -60,7 +60,10 @@ const agency = import.meta.env.AGENCY_NAME ?? 'Vtuber Agency';
           <a href="https://twitter.com" target="_blank" class="hover:text-brand">X</a>
           <div class="ml-2"><ThemeToggle /></div>
         </nav>
-        <button id="btn-mobile-nav" class="md:hidden inline-flex items-center gap-2 rounded border px-3 py-1 text-sm hover:border-brand" aria-controls="mobile-nav" aria-expanded="false" aria-label="メニュー">☰</button>
+        <div class="flex items-center gap-2 md:hidden">
+          <div class=""><ThemeToggle /></div>
+          <button id="btn-mobile-nav" class="inline-flex items-center gap-2 rounded border px-3 py-1 text-sm hover:border-brand" aria-controls="mobile-nav" aria-expanded="false" aria-label="メニュー">☰</button>
+        </div>
       </div>
     </header>
     <div class="bg-sky-50 dark:bg-sky-900/30 text-gray-800 dark:text-gray-100 border-b border-sky-200 dark:border-sky-800">
