@@ -9,7 +9,7 @@ export interface MemberCardProps {
 }
 const { name, avatar, slug, tags = [] } = Astro.props as MemberCardProps;
 ---
-<a href={`/members/${slug}`} class="group rounded-xl border bg-white/50 dark:bg-gray-900/40 border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-lg transition">
+<a href={`/members/${slug}`} class="group rounded-xl border bg-gray-50 dark:bg-gray-900/40 border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-md transition">
   <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
     <img src={r2(avatar)} alt={`${name} avatar`} loading="lazy" sizes="(min-width: 1024px) 320px, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw" class="h-full w-full object-cover group-hover:scale-[1.03] transition" onerror="this.onerror=null;this.src='/images/placeholder-avatar.svg'" />
   </div>

@@ -4,7 +4,7 @@ const { items } = Astro.props as { items: CollectionEntry<'news'>[] };
 ---
 <div class="space-y-6">
   {items.map((n) => (
-    <a href={`/news/${n.slug}`} class="block rounded-xl border border-gray-200 dark:border-gray-800 p-4 hover:border-brand">
+    <a href={`/news/${n.slug}`} class="block rounded-xl border border-gray-200 dark:border-gray-800 p-4 shadow-sm hover:shadow-md hover:border-brand">
       <div class="text-sm text-gray-500">{new Date(n.data.date).toLocaleDateString('ja-JP')}</div>
       <div class="mt-1 text-lg font-semibold">{n.data.title}</div>
       {n.data.summary && <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">{n.data.summary}</p>}
@@ -21,4 +21,3 @@ const { items } = Astro.props as { items: CollectionEntry<'news'>[] };
     </a>
   ))}
 </div>
-

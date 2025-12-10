@@ -11,10 +11,41 @@ html, body {
 }
 
 body {
-  @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
+  @apply bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100;
 }
 
 .container-prose p {
   @apply leading-7 text-gray-700 dark:text-gray-300;
+}
+
+/* Accessibility & readability tweaks for light/dark */
+::selection {
+  background-color: theme(colors.brand.light);
+  color: #0b1220;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid theme(colors.brand.DEFAULT);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Plain links (without utility classes) get brand color */
+a:not([class]) {
+  @apply text-brand hover:underline;
+}
+
+/* Improve headings contrast inside markdown/content */
+.prose h1, .prose h2, .prose h3 {
+  @apply text-gray-900 dark:text-gray-100;
+}
+
+/* Slightly tighter container width for long text */
+@media (min-width: 768px) {
+  .container-prose { max-width: 68ch; }
 }
 
