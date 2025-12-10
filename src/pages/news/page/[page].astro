@@ -8,7 +8,7 @@ const PAGE_SIZE = 10;
 
 export async function getStaticPaths() {
   const news = (await getCollection('news')).sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
-  const pageCount = Math.max(1, Math.ceil(news.length / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(news.length / 10));
   return Array.from({ length: pageCount }).map((_, i) => ({ params: { page: String(i + 1) }, props: { news, page: i + 1, pageCount } }));
 }
 

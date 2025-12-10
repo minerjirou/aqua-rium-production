@@ -20,7 +20,7 @@ export async function getStaticPaths() {
   const paths: any[] = [];
   for (const [slug, original] of cats) {
     const filtered = members.filter((m) => m.data.category && slugify(m.data.category) === slug).sort((a, b) => a.data.order - b.data.order);
-    const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    const pageCount = Math.max(1, Math.ceil(filtered.length / 9));
     for (let i = 1; i <= pageCount; i++) {
       paths.push({ params: { category: slug, page: String(i) }, props: { category: original, slug, members: filtered, page: i, pageCount } });
     }

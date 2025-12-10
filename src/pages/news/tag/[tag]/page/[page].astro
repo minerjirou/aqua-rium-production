@@ -19,7 +19,7 @@ export async function getStaticPaths() {
   const paths: any[] = [];
   for (const [slug, original] of tags) {
     const filtered = news.filter((n) => (n.data.tags ?? []).some((t) => slugify(t) === slug)).sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
-    const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    const pageCount = Math.max(1, Math.ceil(filtered.length / 10));
     for (let i = 1; i <= pageCount; i++) {
       paths.push({ params: { tag: slug, page: String(i) }, props: { tag: original, slug, news: filtered, page: i, pageCount } });
     }

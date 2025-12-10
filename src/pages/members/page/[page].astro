@@ -8,7 +8,7 @@ const PAGE_SIZE = 9;
 
 export async function getStaticPaths() {
   const members = (await getCollection('member')).sort((a, b) => a.data.order - b.data.order);
-  const pageCount = Math.max(1, Math.ceil(members.length / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(members.length / 9));
   return Array.from({ length: pageCount }).map((_, i) => ({
     params: { page: String(i + 1) },
     props: { members, page: i + 1, pageCount },
