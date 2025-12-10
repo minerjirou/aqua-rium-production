@@ -6,19 +6,48 @@ import { getCollection } from 'astro:content';
 
 const news = (await getCollection('news')).sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date)).slice(0, 5);
 const members = (await getCollection('member')).sort((a, b) => a.data.order - b.data.order).slice(0, 6);
+const agencyName = import.meta.env.AGENCY_NAME ?? 'アクアリアムプロダクション';
+const concept = '「透明な器（アクアリウム）の中で、それぞれの光（タレント）が自由に輝く」というテーマ。個性を尊重しつつ、視聴者には安心感と癒しを提供する。';
 ---
-<Base title={`ホーム | ${import.meta.env.AGENCY_NAME ?? 'Vtuber Agency'}`} description="メンバーの個性と魅力を発信する公式サイトサンプル。Cloudflare Pages + R2対応。">
+<Base title={`ホーム | ${agencyName}`} description={concept}>
   <section class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-brand/20 blur-3xl"></div>
+      <div class="absolute -bottom-16 -right-16 h-72 w-72 rounded-full bg-brand/10 blur-2xl"></div>
+    </div>
     <div class="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
       <div>
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">{import.meta.env.AGENCY_NAME ?? 'Vtuber Agency'}</h1>
-        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">メンバーの個性と魅力を発信する公式サイトサンプル。Cloudflare Pages + R2対応。</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+          アクアリアムプロダクション
+        </h1>
+        <p class="mt-3 text-brand text-lg">水面に映る、あなたの光。</p>
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">{concept}</p>
         <div class="mt-6 flex gap-4">
           <a href="/members" class="rounded-lg bg-brand px-5 py-2.5 text-white hover:bg-brand-dark">メンバーを見る</a>
           <a href="/news" class="rounded-lg border px-5 py-2.5 hover:border-brand">ニュース</a>
         </div>
       </div>
-      <div class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-brand/10 via-transparent to-brand/10 border border-gray-200 dark:border-gray-800"></div>
+      <div class="relative aspect-[4/3] rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-900/50 overflow-hidden">
+        <svg viewBox="0 0 400 300" class="absolute inset-0 h-full w-full">
+          <defs>
+            <radialGradient id="bubble" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#E0F2FE" />
+              <stop offset="100%" stop-color="#7DD3FC" stop-opacity="0.3" />
+            </radialGradient>
+          </defs>
+          <circle cx="90" cy="210" r="60" fill="url(#bubble)" />
+          <circle cx="300" cy="80" r="40" fill="url(#bubble)" />
+          <circle cx="230" cy="200" r="25" fill="url(#bubble)" />
+          <g fill="none" stroke="#7DD3FC" stroke-width="1.5" opacity="0.6">
+            <circle cx="200" cy="150" r="48" />
+            <circle cx="200" cy="150" r="80" />
+          </g>
+          <g fill="#38BDF8" opacity="0.9">
+            <polygon points="200,40 206,50 218,52 208,60 210,72 200,66 190,72 192,60 182,52 194,50" />
+            <polygon points="340,220 344,226 352,228 346,234 348,242 340,238 332,242 334,234 328,228 336,226" />
+          </g>
+        </svg>
+      </div>
     </div>
   </section>
 
@@ -38,3 +67,4 @@ const members = (await getCollection('member')).sort((a, b) => a.data.order - b.
     </div>
   </section>
 </Base>
+

@@ -8,10 +8,10 @@ const members = (await getCollection('member')).sort((a, b) => a.data.order - b.
 const tags = Array.from(new Map(members.flatMap(m => (m.data.fanTags ?? []).map(t => [slugify(t), t])))).map(([slug, name]) => ({ slug, name }));
 const categories = Array.from(new Map(members.filter(m => m.data.category).map(m => [slugify(m.data.category as string), m.data.category as string]))).map(([slug, name]) => ({ slug, name }));
 ---
-<Base title={`メンバー一覧 | ${import.meta.env.AGENCY_NAME ?? 'Vtuber Agency'}`} description="各メンバーのSNS、ファンタグ、入賞履歴、衣装ギャラリーを掲載しています。">
+<Base title={`メンバー一覧 | ${import.meta.env.AGENCY_NAME ?? 'Vtuber Agency'}`} description="各メンバーのSNS、ファンタグ、受賞歴、衣装などの情報を閲覧できます。">
   <section class="mx-auto max-w-6xl px-4 py-10">
-    <h1 class="text-3xl font-bold">メンバー紹介</h1>
-    <p class="mt-2 text-gray-600 dark:text-gray-300">各メンバーのSNS、ファンタグ、入賞履歴、衣装ギャラリーを掲載しています。</p>
+    <h1 class="text-3xl font-bold">メンバー</h1>
+    <p class="mt-2 text-gray-600 dark:text-gray-300">各メンバーのSNS、ファンタグ、受賞歴、衣装などの情報を閲覧できます。</p>
 
     {(tags.length > 0 || categories.length > 0) && (
       <div class="mt-6 flex flex-wrap gap-3">
@@ -34,3 +34,4 @@ const categories = Array.from(new Map(members.filter(m => m.data.category).map(m
     </div>
   </section>
 </Base>
+

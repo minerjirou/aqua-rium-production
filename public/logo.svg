@@ -5,19 +5,13 @@
       <stop offset="100%" stop-color="#7DD3FC" stop-opacity="0.35"/>
     </radialGradient>
   </defs>
-  <rect width="64" height="64" rx="12" fill="#ffffff"/>
   <circle cx="24" cy="40" r="14" fill="url(#b)"/>
   <circle cx="46" cy="20" r="9" fill="url(#b)"/>
-  <g stroke="#7DD3FC" stroke-width="2" opacity="0.9">
+  <g stroke="#7DD3FC" stroke-width="2" opacity="0.8">
     <circle cx="32" cy="32" r="12"/>
     <circle cx="32" cy="32" r="20"/>
   </g>
   <g fill="#38BDF8">
-    <polygon points="32,8 35,12 40,13 36,16 37,21 32,18 27,21 28,16 24,13 29,12"/>
+    <polygon points="32,6 35,11 41,12 36,16 37,22 32,19 27,22 28,16 23,12 29,11"/>
   </g>
-  <style>
-    @media (prefers-color-scheme: dark) {
-      rect { fill: #0b1220; }
-    }
-  </style>
 </svg>
