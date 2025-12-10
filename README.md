@@ -1,56 +1,71 @@
-# Vtuber Site Sample (Astro + Cloudflare Pages + R2)
+# Aqua-Rium Production — Astro + Cloudflare Pages + R2
 
-Astroで構築した、Cloudflare Pages/R2対応のVTuber事務所サイトのサンプルです。
+アクアリアムプロダクション（架空）のサイト実装テンプレートです。Astro 5 をベースに、Cloudflare Pages と R2（公開バケット）で運用できます。
 
-主な機能
-- Cloudflare Pagesで静的ホスティング
-- 画像はR2公開バケットから配信（`PUBLIC_R2_BASE_URL`）
-- メンバー紹介/ニュースをContent Collectionsで管理（Markdown）
-- ダークモード切替トグル（クラスベース、永続化）
-- メンバー/ニュースのタグ・カテゴリ + ページネーション
-- 衣装ギャラリー（モーダル・カルーセル、←/→/ESC、スワイプ）
-- SEO整備（OG/Twitter、canonical、JSON‑LD、sitemap、robots）
+主な特徴
+- Cloudflare Pages で静的ホスティング（`astro build` → `dist/`）
+- 画像は R2 の公開ドメインから配信（`PUBLIC_R2_BASE_URL`）
+- メンバー/ニュースは Content Collections（Markdown）で管理
+- メンバープロフィール拡張（読み/担当色/キャッチ/自己紹介/詳細情報/YouTube埋め込み 等）
+- 世代（◯期生）は `category` で管理、カード/詳細に表示
+- タグの中央管理（YAML）と自動統合（ニュース用/メンバー用）
+- 画像ギャラリー（モーダル・スワイプ・キーボード操作）
+- SEO（OG/Twitter、canonical、JSON‑LD、sitemap、robots.txt）
+- ダークモード固定（切替は撤去し、常にダーク）
 
-## セットアップ
+対応バージョン
+- Node.js >= 18.17（推奨 20 以上）
+
+---
+
+セットアップ
 1) 依存関係のインストール
 - `npm install`
 
-2) 環境変数（`.env`）
-```env
-PUBLIC_R2_BASE_URL=https://<your-r2-bucket-public-hostname>
-AGENCY_NAME=Sample Vtuber Agency
-SITE=https://your-domain.example
+2) 環境変数（.env または Pages の Environment Variables）
 ```
-- R2の公開エンドポイント例: `https://<accountid>.r2.cloudflarestorage.com/<bucket>` またはCDNのカスタムドメイン
+PUBLIC_R2_BASE_URL=https://<your-public-domain-or-r2.dev>
+AGENCY_NAME=アクアリアムプロダクション (Aqua-Rium Production)
+SITE=https://<your-production-domain>
+```
+- 注意: `PUBLIC_R2_BASE_URL` は必ず `https://...` の完全URL（プロトコル必須）
+- R2 は「Public access」を有効化し、`…r2.dev` かカスタムドメインを使用
 
-3) 開発サーバ
-- `npm run dev`
+3) 開発/ビルド
+- 開発: `npm run dev`
+- ビルド: `npm run build`
+- プレビュー: `npm run preview`
 
-4) ビルド/プレビュー
-- `npm run build`
-- `npm run preview`
+---
 
-## ディレクトリ構成
-- `src/content/member/*` メンバー（Markdown）
-- `src/content/news/*` ニュース（Markdown）
-- `src/pages/*` ページ（一覧/詳細/タグ/カテゴリ/ページネーション）
-- `src/components/*` UIコンポーネント
-- `src/layouts/*` レイアウト
-- `src/utils/r2.ts` R2画像URLの組み立て
+ディレクトリ構成（抜粋）
+- `src/content/member/*` … メンバーのMarkdown
+- `src/content/news/*` … ニュースのMarkdown
+- `src/content/tags.yml` … 中央管理のタグ（news 用 `tags:` / member 用 `memberTags:`）
+- `src/pages/*` … ページ（一覧/詳細/タグ/カテゴリ/ページネーション）
+- `src/components/*` … UI コンポーネント
+- `src/layouts/*` … レイアウト/共通ヘッダ
+- `src/utils/r2.ts` … 画像URL生成（相対→R2公開URLへ展開）
+- `src/utils/tags.ts` … YAML 読み込みとタグ統合ユーティリティ
 
-## コンテンツスキーマ
-`src/content/config.ts` でZodスキーマ定義。
+---
 
-- member
+コンテンツ・スキーマ概要（`src/content/config.ts`）
+- member（主要フィールド）
   - `name: string`
-  - `avatar: string`（R2基準のパス）
-  - `bio?: string`
-  - `socials: {name,url}[]`
-  - `fanTags: string[]`
-  - `awards: {year,title}[]`
-  - `outfits: {name,image}[]`
+  - `avatar: string`（R2キー or `/public` 相対パス、例: `members/luca/Luca_Avatar.png`）
+  - `reading?: string`（ふりがな）
+  - `color?: string`（担当カラー `#RRGGBB`）
+  - `catchphrase?: string`, `greeting?: string`
+  - `origin?: string`, `heightCm?: number`, `birthday?: string`, `zodiac?: string`
+  - `likes?: string[]`, `dislikes?: string[]`, `features?: string`
+  - `xHandle?: string`, `youtubeChannelId?: string`, `youtubeEmbed?: string`
+  - `socials: { name: string; url: string }[]`
+  - `fanTags: string[]`（活動タグ。表示/ページ生成は中央管理の `memberTags` を許可リストとして使用）
+  - `awards: { year: string; title: string }[]`
+  - `outfits: { name: string; image: string }[]`
   - `order: number`
-  - `category?: string`
+  - `category?: string`（◯期生 表示に使用）
 
 - news
   - `title: string`
@@ -59,78 +74,70 @@ SITE=https://your-domain.example
   - `tags: string[]`
   - `category?: string`
 
-メンバーFrontmatter例
-```yaml
-name: 星乃 ほし
-order: 1
-avatar: images/members/hoshi/avatar.svg
-bio: |
-  歌とゲームが大好きな宇宙系VTuber。
-socials:
-  - { name: X(Twitter), url: "https://x.com/example" }
-fanTags: [ほし民, ファンアート]
-awards:
-  - { year: "2023", title: インディーゲーム杯 準優勝 }
-outfits:
-  - { name: 通常衣装, image: images/members/hoshi/outfit-default.svg }
-category: 歌い手
+---
+
+タグ管理（中央管理 + 自動統合）
+- 中央管理ファイル: `src/content/tags.yml`
 ```
+tags:
+  - リリース
+  - メンバー
+  - イベント
+  - コラボ
 
-`avatar` や `outfits[].image` はR2のオブジェクトキー相当のパスを指定します。実際の配信URLは `PUBLIC_R2_BASE_URL` と結合されます（開発時未設定なら `public/` を参照）。
-
-## 使い方/URL
-- メンバー一覧: `/members`（導線） / `/members/page/1`（9件/ページ）
-- メンバータグ: `/members/tag/<tag-slug>/page/1`
-- メンバーカテゴリ: `/members/category/<category-slug>/page/1`
-- ニュース一覧: `/news`（導線） / `/news/page/1`（10件/ページ）
-- ニュースタグ: `/news/tag/<tag-slug>/page/1`
-- ニュースカテゴリ: `/news/category/<category-slug>/page/1`
-
-タグ/カテゴリのスラグは `src/utils/slug.ts` の `slugify()` で生成され、ページは静的にビルドされます。
-
-## ダークモード
-- ヘッダー右側のトグルでライト/ダークを切替（`localStorage`永続化）
-- Tailwindは `darkMode: 'class'` を使用
-
-## 衣装ギャラリー
-- メンバー詳細ページでサムネクリック→モーダル表示
-- 左右ボタン/←→/ESC/スワイプでナビゲーション
-
-## SEO
-- 共通コンポーネント: `src/components/Seo.astro`
-  - `title`, `description`, `image`, `type`（`website|article|profile`）
-  - すべてのページへ `src/layouts/BaseLayout.astro` から自動挿入
-- JSON‑LD:
-  - 全ページ: `Organization`/`WebSite` を挿入
-  - メンバー詳細: `Person`
-  - ニュース詳細: `NewsArticle`
-- サイトマップ: `@astrojs/sitemap`（`astro.config.mjs` の `site` 必須）
-- robots.txt: `src/pages/robots.txt.ts`（`SITE` でSitemap URLを生成）
-- 既定OG画像: `public/og.png`（任意で差し替え）
-
-任意: OG画像の事前生成
+memberTags:
+  - 歌
+  - 雑談
+  - ゲーム
 ```
-npm run gen:og
-```
-出力先:
-- `public/og/member/<slug>.png`
-- `public/og/news/<slug>.png`
-（ページ側で `ogImage` を `/og/...` に指定すると生成画像を利用できます。既定ではアバターや `/og.png` を利用。）
+- ニュース一覧/タグページ: YAMLの `tags` と記事 `tags` の和集合を表示・生成
+- メンバー一覧/タグページ: YAMLの `memberTags` のみを表示・生成（許可制）。
+  - コンテンツの `fanTags` に同名が含まれているメンバーのみ、そのタグページへ出現
 
-## Cloudflare Pages へのデプロイ
-1) 新規プロジェクト作成
+---
+
+画像の扱い
+- 相対パス（例: `members/luca/Luca_Summer.png`）を Frontmatter に記述
+- 実際の `<img src>` は `PUBLIC_R2_BASE_URL` を前置して生成（`src/utils/r2.ts`）
+- `PUBLIC_R2_BASE_URL` 未設定のときは `/public` を参照（開発簡便化）
+- 画像が存在しない場合は、プレースホルダー（`/images/placeholder-*.svg`）を表示
+
+---
+
+ダークモード
+- サイト全体をダークモード固定にしています（`<html class="dark">`）。
+- ライト用クラスは残してありますが、実際の表示はダークが優先されます。
+
+---
+
+デプロイ（Cloudflare Pages）
+1) プロジェクト作成
 - Framework: Astro（自動検出）
 - Build command: `npm run build`
 - Output directory: `dist`
 
-2) 環境変数（Pagesのプロジェクト設定）
-- `PUBLIC_R2_BASE_URL`, `AGENCY_NAME`, `SITE`
-- `SITE` は本番フルURL（例: `https://vtuber.example.com`）
+2) 環境変数（Production / Preview 両方）
+- `PUBLIC_R2_BASE_URL=https://<r2.dev または カスタムドメイン>`
+- `AGENCY_NAME=アクアリアムプロダクション (Aqua-Rium Production)`
+- `SITE=https://<本番ドメイン>`
 
-3) R2（画像配信）
-- 公開バケットに画像を配置
-- 「公開アクセス」を有効化し、公開エンドポイントまたはCDNドメインを `PUBLIC_R2_BASE_URL` に設定
+3) R2 側
+- バケットを Public access 有効化
+- 公開URL（例: `https://pub-xxxx.r2.dev` または `https://assets.example.com`）を `PUBLIC_R2_BASE_URL` に設定
 
-補足
-- SSRやR2 API呼び出しは不要（静的サイト）。画像は公開URLから直接配信。
+トラブルシューティング
+- 画像が表示されない
+  - `PUBLIC_R2_BASE_URL` が `https://` 付きの公開URLか確認
+  - S3エンドポイント（`…cloudflarestorage.com`）は認証必須のため使用不可
+  - オブジェクトキー（大文字小文字含む）と Frontmatter のパスが完全一致しているか
+  - 直リンク `PUBLIC_R2_BASE_URL/...` が 200 で開けるか
+
+スクリプト
+- `npm run dev` … 開発サーバー
+- `npm run build` … ビルド
+- `npm run preview` … ローカルプレビュー
+- `npm run gen:og` … 例示的なOG画像生成（必要に応じて）
+
+ライセンス
+- 本テンプレートはデモ用途を想定。記載の人物・団体等は架空です。
 

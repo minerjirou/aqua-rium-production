@@ -3,12 +3,12 @@ import Base from '@/layouts/BaseLayout.astro';
 import MemberCard from '@/components/MemberCard.astro';
 import { getCollection } from 'astro:content';
 import { slugify } from '@/utils/slug';
-import { getConfiguredMemberTags, mergeTags } from '@/utils/tags';
+import { getConfiguredMemberTags } from '@/utils/tags';
 
 const members = (await getCollection('member')).sort((a, b) => a.data.order - b.data.order);
-const configuredTags = await getConfiguredMemberTags();
-const discoveredTags = Array.from(new Set(members.flatMap(m => (m.data.fanTags ?? []))));
-const tags = mergeTags(configuredTags, discoveredTags);
+// Show only centrally-managed member tags to avoid fan hashtags being listed
+const allowed = await getConfiguredMemberTags();
+const tags = allowed.map(name => ({ slug: slugify(name), name }));
 const categories = Array.from(new Map(members.filter(m => m.data.category).map(m => [slugify(m.data.category as string), m.data.category as string]))).map(([slug, name]) => ({ slug, name }));
 ---
 <Base title={`メンバー一覧 | ${import.meta.env.AGENCY_NAME ?? 'Vtuber Agency'}`} description="各メンバーのSNS、ファンタグ、受賞歴、衣装などの情報を閲覧できます。">
