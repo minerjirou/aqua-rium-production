@@ -28,6 +28,16 @@ const { Content } = await m.render();
       </div>
 
       <div class="space-y-10">
+        <section>
+          <div class="rounded-lg border border-gray-200 dark:border-gray-800 p-4 bg-white/40 dark:bg-gray-900/40">
+            <div class="flex flex-wrap items-center gap-4">
+              {data.color && <span class="inline-flex items-center gap-2 text-sm"><span class="inline-block h-4 w-4 rounded-full border" style={`background:${data.color}`}></span><span>担当カラー: {data.color}</span></span>}
+              {data.reading && <span class="text-sm text-gray-600 dark:text-gray-300">読み: {data.reading}</span>}
+              {data.catchphrase && <span class="ml-auto text-sm italic text-brand">{data.catchphrase}</span>}
+            </div>
+            {data.greeting && <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">{data.greeting}</p>}
+          </div>
+        </section>
         {data.bio && (
           <section>
             <h2 class="text-xl font-semibold">自己紹介</h2>
@@ -40,6 +50,17 @@ const { Content } = await m.render();
           <div class="mt-3">
             <SocialLinks socials={data.socials} />
           </div>
+          {data.xHandle && (
+            <div class="mt-4">
+              <a class="twitter-timeline" href={`https://twitter.com/${data.xHandle}?ref_src=twsrc%5Etfw`} data-height="420">Tweets by @{data.xHandle}</a>
+              <script async src="https://platform.twitter.com/widgets.js"></script>
+            </div>
+          )}
+          {data.youtubeEmbed && (
+            <div class="mt-4 aspect-video rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800">
+              <iframe src={data.youtubeEmbed} title="YouTube player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="h-full w-full"></iframe>
+            </div>
+          )}
         </section>
 
         {data.category && (
@@ -80,6 +101,21 @@ const { Content } = await m.render();
             <Content />
           </div>
         </section>
+
+        {(data.origin || data.heightCm || data.birthday || data.zodiac || data.likes.length > 0 || data.dislikes.length > 0 || data.features) && (
+          <section>
+            <h2 class="text-xl font-semibold">プロフィール詳細</h2>
+            <div class="mt-3 grid sm:grid-cols-2 gap-4 text-sm">
+              {data.origin && <div><span class="text-gray-500">出身:</span> {data.origin}</div>}
+              {data.heightCm && <div><span class="text-gray-500">身長:</span> {data.heightCm}cm</div>}
+              {data.birthday && <div><span class="text-gray-500">誕生日:</span> {data.birthday}</div>}
+              {data.zodiac && <div><span class="text-gray-500">星座:</span> {data.zodiac}</div>}
+              {data.likes.length > 0 && <div class="sm:col-span-2"><span class="text-gray-500">好きなもの:</span> {data.likes.join('、')}</div>}
+              {data.dislikes.length > 0 && <div class="sm:col-span-2"><span class="text-gray-500">苦手なもの:</span> {data.dislikes.join('、')}</div>}
+              {data.features && <div class="sm:col-span-2"><span class="text-gray-500">特徴:</span> {data.features}</div>}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   </article>
